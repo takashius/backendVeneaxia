@@ -4,8 +4,8 @@ const definition = {
   swagger: "2.0",
   info: {
     version: "2.0.0",
-    title: "Multitrack API",
-    description: "New version of the app",
+    title: "Veneaxia API",
+    description: "API for seco system",
     license: {
       name: "MIT",
       url: "https://opensource.org/licenses/MIT",
