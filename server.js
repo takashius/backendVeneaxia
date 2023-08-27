@@ -4,7 +4,7 @@ import db from "./db.js";
 import config from "./config.js";
 import router from "./network/routes.js";
 import cors from "cors";
-import swaggerJSDoc from "swagger-jsdoc";
+import definition from "./swagger.js";
 import swaggerUi from "swagger-ui-express";
 import path from "path";
 import { fileURLToPath } from "url";
@@ -19,23 +19,14 @@ server.use(bodyParser.json());
 server.use(cors());
 
 router(server);
-const swaggerOptions = {
-  swaggerDefinition: {
-    info: "1.0.0",
-    title: "Codu API",
-    description: "Prueba inicial",
-    contact: {
-      name: "Erick Hernandez",
-      url: "https://erdesarrollo.com.ve",
-    },
-    servers: [`http://localhost:${config.port}`],
-  },
-  apis: [`${path.join(__dirname, "./components/user/network.js")}`],
-};
 
-const swaggerDocs = swaggerJSDoc(swaggerOptions);
-
-server.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
+server.use(
+  "/api-docs",
+  swaggerUi.serve,
+  swaggerUi.setup(definition, {
+    swaggerOptions: { defaultModelsExpandDepth: -1 },
+  })
+);
 
 server.use(_static(config.publicRoute));
 server.use(_static("./static"));
